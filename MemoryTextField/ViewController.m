@@ -7,8 +7,13 @@
 //
 
 #import "ViewController.h"
+#import "MemoryTextField.h"
+
+#define StaH [[UIApplication sharedApplication] statusBarFrame].size.height
 
 @interface ViewController ()
+
+@property(nonatomic,strong) MemoryTextField *textField;
 
 @end
 
@@ -16,12 +21,19 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+
+    _textField = [[MemoryTextField alloc]initWithFrame:CGRectMake(20, 50+StaH, self.view.frame.size.width*0.6, 50) inViewController:self];
+    [self.view addSubview:_textField];
+    
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (IBAction)saveString:(UIButton *)sender {
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"save" object:nil userInfo:nil];
+}
+
+
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [_textField resignFirstResponder];
 }
 
 @end
